@@ -1,0 +1,9 @@
+{
+  "ignore": [
+    "src/uploads/*",
+    "src/uploads/**/*",
+    "node_modules",
+    "*.log",
+    "check_register.js"
+  ]
+}
