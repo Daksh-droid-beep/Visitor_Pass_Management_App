@@ -37,7 +37,7 @@ initMailTransporter().catch(err => {
 const localOriginRegex = /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/;
 app.use(cors({
   origin: function (origin, callback) {
-    if (!origin || localOriginRegex.test(origin)) {
+    if (!origin || localOriginRegex.test(origin) || origin === process.env.FRONTEND_URL) {
       callback(null, true);
     } else {
       callback(new Error('Not allowed by CORS'));
