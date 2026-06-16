@@ -34,16 +34,24 @@ initMailTransporter().catch(err => {
 });
 
 // Middlewares
-const localOriginRegex = /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/;
+const allowedOriginPatterns = [
+  /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/,   // local dev
+  /^https:\/\/[\w-]+\.vercel\.app$/,              // any Vercel deployment
+  /^https:\/\/[\w-]+\.onrender\.com$/,            // any Render deployment
+];
 app.use(cors({
   origin: function (origin, callback) {
     const allowedFrontend = process.env.FRONTEND_URL ? process.env.FRONTEND_URL.replace(/\/$/, '') : '';
     const normalizedOrigin = origin ? origin.replace(/\/$/, '') : '';
 
-    if (!origin || localOriginRegex.test(origin) || normalizedOrigin === allowedFrontend) {
+    const isAllowed = !origin ||
+      allowedOriginPatterns.some(pattern => pattern.test(normalizedOrigin)) ||
+      normalizedOrigin === allowedFrontend;
+
+    if (isAllowed) {
       callback(null, true);
     } else {
-      console.warn(`Blocked by CORS: origin='${origin}', allowedFrontend='${allowedFrontend}'`);
+      console.warn(`Blocked by CORS: origin='${origin}'`);
       callback(new Error('Not allowed by CORS'));
     }
   },
