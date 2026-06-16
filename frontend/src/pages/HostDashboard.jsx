@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import api from '../services/api';
+import api, { BACKEND_URL } from '../services/api';
 import { UserCheck, UserX, Clock, Calendar, ShieldCheck, AlertCircle, RefreshCw, Search } from 'lucide-react';
 
 const HostDashboard = () => {
@@ -211,7 +211,7 @@ const HostDashboard = () => {
                         <img
                           src={
                             app.visitorId?.photo 
-                              ? `http://localhost:5000/${app.visitorId.photo}` 
+                              ? `${BACKEND_URL}/${app.visitorId.photo}` 
                               : `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(app.visitorId?.fullName || 'V')}`
                           }
                           alt="Visitor"

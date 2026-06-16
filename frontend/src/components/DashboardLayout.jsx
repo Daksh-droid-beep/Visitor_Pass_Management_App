@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { BACKEND_URL } from '../services/api';
 import { 
   LayoutDashboard, Users, FileText, QrCode, LogOut, Menu, X, ShieldAlert,
   UserPlus, UserCheck, CalendarDays, ScanLine, Clock, CalendarCheck
@@ -66,7 +67,7 @@ const DashboardLayout = ({ children }) => {
   // Get user profile photo url, handle fallback
   const getAvatarUrl = () => {
     if (user?.profilePhoto) {
-      return `http://localhost:5000/${user.profilePhoto}`;
+      return `${BACKEND_URL}/${user.profilePhoto}`;
     }
     return `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(user?.name || 'User')}`;
   };

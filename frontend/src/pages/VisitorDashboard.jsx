@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import api from '../services/api';
+import api, { BACKEND_URL } from '../services/api';
 import { QrCode, Download, Eye, Plus, Calendar, CheckCircle, Clock, AlertCircle } from 'lucide-react';
 
 const VisitorDashboard = () => {
@@ -58,7 +58,7 @@ const VisitorDashboard = () => {
 
   const handleDownloadPDF = (passId) => {
     // Directly trigger window download stream
-    window.open(`http://localhost:5000/api/pass/download/${passId}`, '_blank');
+    window.open(`${BACKEND_URL}/api/pass/download/${passId}`, '_blank');
   };
 
   // Compute metrics

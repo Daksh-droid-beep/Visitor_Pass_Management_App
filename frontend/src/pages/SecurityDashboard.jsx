@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import api from '../services/api';
+import api, { BACKEND_URL } from '../services/api';
 import QrScanner from 'react-qr-scanner';
 import { Scan, Users, Clock, ShieldCheck, AlertCircle, Sparkles, LogIn, LogOut, Search } from 'lucide-react';
 
@@ -409,7 +409,7 @@ const SecurityDashboard = () => {
                       <td class="px-6 py-4 text-center">
                         {app.pass ? (
                           <button
-                            onClick={() => window.open(`http://localhost:5000/api/pass/download/${app.pass.passNumber}`, '_blank')}
+                            onClick={() => window.open(`${BACKEND_URL}/api/pass/download/${app.pass.passNumber}`, '_blank')}
                             class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg text-xs font-semibold shadow-md transition-all inline-flex items-center"
                           >
                             Download PDF
