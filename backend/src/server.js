@@ -37,9 +37,13 @@ initMailTransporter().catch(err => {
 const localOriginRegex = /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/;
 app.use(cors({
   origin: function (origin, callback) {
-    if (!origin || localOriginRegex.test(origin) || origin === process.env.FRONTEND_URL) {
+    const allowedFrontend = process.env.FRONTEND_URL ? process.env.FRONTEND_URL.replace(/\/$/, '') : '';
+    const normalizedOrigin = origin ? origin.replace(/\/$/, '') : '';
+
+    if (!origin || localOriginRegex.test(origin) || normalizedOrigin === allowedFrontend) {
       callback(null, true);
     } else {
+      console.warn(`Blocked by CORS: origin='${origin}', allowedFrontend='${allowedFrontend}'`);
       callback(new Error('Not allowed by CORS'));
     }
   },
